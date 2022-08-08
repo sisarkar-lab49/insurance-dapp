@@ -1,4 +1,7 @@
-# Sample Hardhat Project with React, Alchemy and Metamask
+# Project with Hardhat, React, Alchemy and Metamask
+
+## Deploys a hello world contract to Goerli testnet. React frontend connects with metamask wallet to interact with smart contract.
+
 
 * create a .env file in ***insurance-dapp***
 ```
