@@ -9,7 +9,7 @@ async function main() {
 
   const content = '\nREACT_APP_CONTRACT_ABI='+ hello_world.address;
 
-  fs.appendFileSync('./frontend/.env', content, (err) => {
+  fs.appendFileSync('./.env', content, (err) => {
     if(err) throw err;
     console.log('contract adddress updated in frontend/.env');
   })
