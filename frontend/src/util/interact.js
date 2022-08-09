@@ -1,14 +1,13 @@
 require("dotenv").config();
-const alchemyKey = process.env.REACT_APP_ALCHEMY_KEY;
+const {REACT_APP_ALCHEMY_KEY, REACT_APP_CONTRACT_ABI} = process.env;
 const { createAlchemyWeb3 } = require("@alch/alchemy-web3");
-const web3 = createAlchemyWeb3(alchemyKey);
+const web3 = createAlchemyWeb3(REACT_APP_ALCHEMY_KEY);
 
 const contractABI = require("../contract-abi.json");
-const contractAddress = "0xd0fd37d6e1e3bf79d53b20ead335581e72fdbc2a";
 
 export const helloWorldContract = new web3.eth.Contract(
-  contractABI,
-  contractAddress
+  contractABI.abi,
+  REACT_APP_CONTRACT_ABI
 );
 
 export const loadCurrentMessage = async () => {
@@ -110,7 +109,7 @@ export const updateMessage = async (address, message) => {
   }
   //set up transaction parameters
   const transactionParameters = {
-    to: contractAddress, // Required except during contract publications.
+    to: REACT_APP_CONTRACT_ABI, // Required except during contract publications.
     from: address, // must match user's active address.
     data: helloWorldContract.methods.update(message).encodeABI(),
   };

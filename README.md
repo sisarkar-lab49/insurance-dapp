@@ -16,5 +16,5 @@ REACT_APP_ALCHEMY_KEY = <alchemy websocket url>
 * commands:
 ```
 npm install && npm run compile && npm run deploy
-cd frontend && npm install && npm start
+npm run ui
 ```

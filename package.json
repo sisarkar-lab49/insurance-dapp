@@ -4,9 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "compile": "npx hardhat compile",
-    "deploy": "npx hardhat run scripts/deploy.js --network goerli"
+    "test": "echo \"Error: no test specified\"",
+    "compile": "npx hardhat compile && cp artifacts/contracts/HelloWorld.sol/HelloWorld.json frontend/src/contract-abi.json",
+    "deploy": "npx hardhat run scripts/deploy.js --network goerli",
+    "setup": "npm run test && npm run compile && npm run deploy",
+    "ui": "cd frontend/ && npm run start"
   },
   "repository": {
     "type": "git",
@@ -25,6 +27,7 @@
     "hardhat": "^2.10.1"
   },
   "dependencies": {
-    "dotenv": "^16.0.1"
+    "dotenv": "^16.0.1",
+    "fs": "0.0.1-security"
   }
 }
