@@ -1,5 +1,5 @@
 require("dotenv").config();
-const {REACT_APP_ALCHEMY_KEY, REACT_APP_CONTRACT_ABI} = process.env;
+const {REACT_APP_ALCHEMY_KEY, REACT_APP_CONTRACT_ADDRESS} = process.env;
 const { createAlchemyWeb3 } = require("@alch/alchemy-web3");
 const web3 = createAlchemyWeb3(REACT_APP_ALCHEMY_KEY);
 
@@ -7,7 +7,7 @@ const contractABI = require("../contract-abi.json");
 
 export const helloWorldContract = new web3.eth.Contract(
   contractABI.abi,
-  REACT_APP_CONTRACT_ABI
+  REACT_APP_CONTRACT_ADDRESS
 );
 
 export const loadCurrentMessage = async () => {
