@@ -4,16 +4,15 @@ pragma solidity ^0.8.7;
 import "hardhat/console.sol";
 
 import "./Model.sol";
-import "./Keeper.sol";
 
 contract Insurance is Model {
 
-    address payable private _owner;
+    address private _owner;
     Policy[] public policies;
     mapping(address => Subscription[]) subscriptions;
 
     constructor() payable {
-        _owner = payable(msg.sender);
+        _owner = msg.sender;
         string[] memory features = new string[](3);
         features[0] = "feature 1";
         features[1] = "feature 2";
@@ -103,13 +102,6 @@ contract Insurance is Model {
 
     // Fallback function is called when msg.data is not empty
     fallback() external payable {}
-
-    function sendViaSend(address payable _to) public payable {
-        // Send returns a boolean value indicating success or failure.
-        // This function is not recommended for sending Ether.
-        bool sent = _to.send(msg.value);
-        require(sent, "Failed to send Ether");
-    }
 
     function buyPolicy(string calldata _policyName, uint _tenure,
      uint _sumInsured, PremiumFrequancy _premiumFrequency, uint _age)
