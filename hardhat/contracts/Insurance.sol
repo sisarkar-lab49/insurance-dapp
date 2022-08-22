@@ -4,15 +4,16 @@ pragma solidity ^0.8.7;
 import "hardhat/console.sol";
 
 import "./Model.sol";
+import "./Keeper.sol";
 
 contract Insurance is Model {
 
-    address private _owner;
+    address payable private _owner;
     Policy[] public policies;
     mapping(address => Subscription[]) subscriptions;
 
-    constructor() {
-        _owner = msg.sender;
+    constructor() payable {
+        _owner = payable(msg.sender);
         string[] memory features = new string[](3);
         features[0] = "feature 1";
         features[1] = "feature 2";
@@ -97,14 +98,26 @@ contract Insurance is Model {
         return basePremium - (basePremium*discountOnPremiumFreq)/100 - (basePremium*discountOnAge)/100 - (basePremium*discountOnTenure)/100;
     }
 
+    // Function to receive Ether. msg.data must be empty
+    receive() external payable {}
+
+    // Fallback function is called when msg.data is not empty
+    fallback() external payable {}
+
+    function sendViaSend(address payable _to) public payable {
+        // Send returns a boolean value indicating success or failure.
+        // This function is not recommended for sending Ether.
+        bool sent = _to.send(msg.value);
+        require(sent, "Failed to send Ether");
+    }
 
     function buyPolicy(string calldata _policyName, uint _tenure,
      uint _sumInsured, PremiumFrequancy _premiumFrequency, uint _age)
       payable public isValidInput(_policyName, _sumInsured) returns(bool){
         uint premiumAmount = calculatePremium(_policyName, _tenure, _sumInsured, _premiumFrequency, _age);
-        require(msg.value >= premiumAmount/100000000, "Not enough Ether to buy this policy");
+        require(msg.value >= premiumAmount/1000000 ether, "Not enough Ether to buy this policy");
 
-        payable(msg.sender).transfer(premiumAmount/100000000);
+        require(payable(address(this)).send(premiumAmount/1000000 ether));
 
         Subscription memory subscription = Subscription(_policyName, _tenure, _sumInsured, _premiumFrequency, _age, premiumAmount, premiumAmount, Status.ACTIVE);
         subscriptions[msg.sender].push(subscription);
@@ -119,7 +132,7 @@ contract Insurance is Model {
         require(isSubscriptionActiveForPolicyHolder(_policyHolder, _subscriptionIndex), "Subscription is not avtive");
 
         Subscription memory subscription = subscriptions[msg.sender][_subscriptionIndex];
-        if(payable(_policyHolder).send(subscription.sumInsured)){
+        if(payable(_policyHolder).send(subscription.sumInsured/100000000)){
             subscriptions[_policyHolder][_subscriptionIndex].status = Status.CLAIMED;
             return true;
         }
