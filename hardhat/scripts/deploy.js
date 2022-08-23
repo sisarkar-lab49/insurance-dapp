@@ -1,11 +1,11 @@
 const fs = require('fs');
 
 async function main() {
-  const HelloWorld = await ethers.getContractFactory("HelloWorld");
+  const Insurance = await ethers.getContractFactory("Insurance");
 
   // Start deployment, returning a promise that resolves to a contract object
-  const hello_world = await HelloWorld.deploy("Hello World!");   
-  console.log("Contract deployed to address:", hello_world.address);
+  const insurance = await Insurance.deploy();   
+  console.log("Contract deployed to address:", insurance.address);
 }
 
 main()
