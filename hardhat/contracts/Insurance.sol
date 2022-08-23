@@ -79,11 +79,10 @@ contract Insurance is ModelState, PriceConsumer {
         return true;
     }
 
-    function claimSettlement(address _policyHolder, uint _subscriptionIndex)
-     public onlyOwner onlyPolicyHolder returns (bool){
+    function claimSettlement(address _policyHolder, uint _subscriptionIndex) public returns (bool){
         require(isSubscriptionActiveForPolicyHolder(_policyHolder, _subscriptionIndex),
          "Subscription is not active");
-        Subscription memory subscription = subscriptions[msg.sender][_subscriptionIndex];
+        Subscription memory subscription = subscriptions[_policyHolder][_subscriptionIndex];
         require(getBalance() >= subscription.paidPremium, "Not enough balance to settle claim.");
         console.log("transferring %s wei to policy holder.", subscription.paidPremium);
         payable(_policyHolder).transfer(subscription.paidPremium);
