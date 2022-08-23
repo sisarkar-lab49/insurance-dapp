@@ -1,13 +1,13 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.7;
 
-import "@chainlink/contracts/src/v0.8/ConfirmedOwner.sol";
+import "./Payable.sol";
 
-contract ModelState is ConfirmedOwner {
+contract ModelState is Payable {
     Policy[] internal policies;
     mapping(address => Subscription[]) internal subscriptions;
 
-    constructor() ConfirmedOwner(msg.sender) {
+    constructor() {
         string[] memory features = new string[](3);
         features[0] = "feature 1";
         features[1] = "feature 2";

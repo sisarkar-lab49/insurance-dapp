@@ -1,10 +1,10 @@
-import HelloWorld from './HelloWorld'
+import Insurance from './Insurance';
 import './App.css';
 
 function App() {
   return (
     <div className="App">
-    <HelloWorld></HelloWorld>
+    <Insurance></Insurance>
     </div>
   );
 }

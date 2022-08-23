@@ -3,10 +3,10 @@ pragma solidity ^0.8.7;
 
 import "hardhat/console.sol";
 
-import "./Payable.sol";
+import "./ModelState.sol";
 import "./PriceConsumer.sol";
 
-contract Insurance is Payable, PriceConsumer {
+contract Insurance is ModelState, PriceConsumer {
   
     modifier isValidInput(string calldata _policyName, uint _sumInsured) {
         Policy memory policy = getPolicy(_policyName);
@@ -15,6 +15,7 @@ contract Insurance is Payable, PriceConsumer {
     }
 
     error DuplicatePolicy(string policyName);
+    event PolicyCreated(string _policyName);
 
     function addPolicy(string calldata _policyName, string[] memory _features,
      string calldata _description, uint _minTenure, uint _maxTenure, uint _minSumInsured,
@@ -26,6 +27,7 @@ contract Insurance is Payable, PriceConsumer {
         policies.push(Policy(_policyName, _features, _description, _minTenure,
          _maxTenure, _minSumInsured, _yeildPercentage, _terms, Status.ACTIVE));
         console.log("Policy added with name %s.", _policyName);
+        emit PolicyCreated(_policyName);
         return true;
     }
 
@@ -77,11 +79,10 @@ contract Insurance is Payable, PriceConsumer {
         return true;
     }
 
-    function claimSettlement(address _policyHolder, uint _subscriptionIndex)
-     public onlyOwner onlyPolicyHolder returns (bool){
+    function claimSettlement(address _policyHolder, uint _subscriptionIndex) public returns (bool){
         require(isSubscriptionActiveForPolicyHolder(_policyHolder, _subscriptionIndex),
          "Subscription is not active");
-        Subscription memory subscription = subscriptions[msg.sender][_subscriptionIndex];
+        Subscription memory subscription = subscriptions[_policyHolder][_subscriptionIndex];
         require(getBalance() >= subscription.paidPremium, "Not enough balance to settle claim.");
         console.log("transferring %s wei to policy holder.", subscription.paidPremium);
         payable(_policyHolder).transfer(subscription.paidPremium);
