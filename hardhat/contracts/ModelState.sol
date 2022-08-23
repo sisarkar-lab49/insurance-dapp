@@ -12,9 +12,10 @@ contract ModelState is ConfirmedOwner {
         features[0] = "feature 1";
         features[1] = "feature 2";
         features[2] = "feature 3";
-        policies.push(Policy("Platinum", features, "Platinum policy", 5, 25, 200000, 4, "T & C", Status.ACTIVE));
-        policies.push(Policy("Gold", features, "Gold policy", 5, 25, 200000, 4, "T & C", Status.ACTIVE));
+        policies.push(Policy("Wellness", features, "Wellness policy", 5, 25, 2100000, 4, "T & C", Status.ACTIVE));
         policies.push(Policy("Silver", features, "Silver policy", 5, 25, 200000, 4, "T & C", Status.ACTIVE));
+        policies.push(Policy("Gold", features, "Gold policy", 5, 25, 300000, 4, "T & C", Status.ACTIVE));
+        policies.push(Policy("Platinum", features, "Platinum policy", 5, 25, 400000, 4, "T & C", Status.ACTIVE));
     }
 
     enum PremiumFrequancy{

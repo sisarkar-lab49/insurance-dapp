@@ -57,37 +57,35 @@ contract Insurance is Payable, PriceConsumer {
     function buyPolicy(string calldata _policyName, uint _tenure,
      uint _sumInsured, PremiumFrequancy _premiumFrequency, uint _age)
       payable public isValidInput(_policyName, _sumInsured) returns(bool){
-        uint premiumAmount = calculatePremium(_policyName, _tenure, _sumInsured, _premiumFrequency, _age);
-        uint prevBalance = getBalance();
-        require(msg.value >= premiumAmount/1000000 ether, "Not enough Ether to buy this policy");
-        console.log("transferring %s ether to contact.");
-        require(payable(address(this)).send(premiumAmount/1000000 ether));
-        Subscription memory subscription = Subscription(_policyName, _tenure, _sumInsured,
-         _premiumFrequency, _age, getBalance() - prevBalance, getBalance() - prevBalance, Status.ACTIVE);
+        uint premiumInEther = getEtherForDollar(calculatePremium(_policyName, _tenure, _sumInsured, _premiumFrequency, _age));
+        uint premiumInWei = premiumInEther * 10**15;
+        require(msg.value >= premiumInWei, "Not enough Wei to buy this policy");
+        console.log("transferring %s ether to contact.", premiumInEther);
+        require(payable(address(this)).send(premiumInWei));
+        Subscription memory subscription = Subscription(_policyName, _tenure, _sumInsured, _premiumFrequency, _age, premiumInWei, premiumInWei, Status.ACTIVE);
         subscriptions[msg.sender].push(subscription);
-        return true;
-    }
-
-    function claimSettlement(address _policyHolder, uint _subscriptionIndex) public onlyOwner onlyPolicyHolder returns (bool){
-        require(isSubscriptionActiveForPolicyHolder(_policyHolder, _subscriptionIndex), "Subscription is not avtive");
-
-        Subscription memory subscription = subscriptions[msg.sender][_subscriptionIndex];
-        console.log("transferring %s ether to policy holder.");
-        payable(_policyHolder).transfer(subscription.paidPremium);
-
-        subscriptions[_policyHolder][_subscriptionIndex].status = Status.CLAIMED;
         return true;
     }
 
     function payPremium(uint _subscriptionIndex) payable external returns (bool){
         require(_subscriptionIndex < subscriptions[msg.sender].length, "Invalid subscription Id.");
         Subscription memory subscription = subscriptions[msg.sender][_subscriptionIndex];
-        uint prevBalance = getBalance();
-        require(msg.value >= subscription.premiumAmount/1000000 ether, "Not enough Ether to pay preminum");
-        console.log("transferring %s ether to contact.");
-        require(payable(address(this)).send(subscription.premiumAmount/1000000 ether));
-        uint premiumPaid = getBalance() - prevBalance;
-        subscriptions[msg.sender][_subscriptionIndex].paidPremium = subscription.paidPremium + premiumPaid;
+        require(msg.value >= subscription.premiumAmount, "Not enough wei to pay preminum");
+        console.log("transferring %s wei to contact.", subscription.premiumAmount);
+        require(payable(address(this)).send(subscription.premiumAmount));
+        subscriptions[msg.sender][_subscriptionIndex].paidPremium = subscription.paidPremium + subscription.premiumAmount;
+        return true;
+    }
+
+    function claimSettlement(address _policyHolder, uint _subscriptionIndex)
+     public onlyOwner onlyPolicyHolder returns (bool){
+        require(isSubscriptionActiveForPolicyHolder(_policyHolder, _subscriptionIndex),
+         "Subscription is not active");
+        Subscription memory subscription = subscriptions[msg.sender][_subscriptionIndex];
+        require(getBalance() >= subscription.paidPremium, "Not enough balance to settle claim.");
+        console.log("transferring %s wei to policy holder.", subscription.paidPremium);
+        payable(_policyHolder).transfer(subscription.paidPremium);
+        subscriptions[_policyHolder][_subscriptionIndex].status = Status.CLAIMED;
         return true;
     }
 }
