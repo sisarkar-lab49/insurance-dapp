@@ -10,29 +10,25 @@ contract Keeper is ChainlinkClient, KeeperCompatibleInterface {
     uint256 private fee;
     bytes32 private jobId;
 
-    uint256 public volume;
+    string public id;
     uint256 private lastRun;
 
     address private _contract;
 
     using Chainlink for Chainlink.Request;
 
-    event RequestVolume(bytes32 indexed requestId, uint256 volume);
+    event RequestId(bytes32 indexed requestId, string id);
 
     constructor(address _address) {
         setChainlinkToken(0x326C977E6efc84E512bB9C30f76E30c160eD06FB);
         setChainlinkOracle(0xCC79157eb46F5624204f47AB42b3906cAA40eaB7);
-        jobId = "ca98366cc7314957b8c012c72f05aeeb";
+        jobId = "7d80a6386ef543a3abb52817f6707e3b";
         fee = (1 * LINK_DIVISIBILITY) / 10;
         lastRun = block.timestamp;
         _contract = _address;
     }
 
-    function setVolumn() public {
-        volume = 0;
-    }
-
-    function requestVolumeData() public returns (bytes32 requestId) {
+    function requestData() public returns (bytes32 requestId) {
         Chainlink.Request memory req = buildChainlinkRequest(
             jobId,
             address(this),
@@ -40,20 +36,18 @@ contract Keeper is ChainlinkClient, KeeperCompatibleInterface {
         );
         req.add(
             "get",
-            "https://min-api.cryptocompare.com/data/pricemultifull?fsyms=ETH&tsyms=USD"
+            "http://ec2-52-6-158-33.compute-1.amazonaws.com:8080/api/data"
         );
-        req.add("path", "RAW,ETH,USD,VOLUME24HOUR");
-        int256 timesAmount = 10**18;
-        req.addInt("times", timesAmount);
+        req.add("path", "id");
         return sendChainlinkRequest(req, fee);
     }
 
-    function fulfill(bytes32 _requestId, uint256 _volume)
+    function fulfill(bytes32 _requestId, string memory _id)
         public
         recordChainlinkFulfillment(_requestId)
     {
-        emit RequestVolume(_requestId, _volume);
-        volume = _volume;
+        emit RequestId(_requestId, _id);
+        id = _id;
     }
 
     function checkUpkeep(bytes calldata checkData)
@@ -66,7 +60,9 @@ contract Keeper is ChainlinkClient, KeeperCompatibleInterface {
         upkeepNeeded = false;
 
         if (decodedValue == 0) {
-            upkeepNeeded = volume != 0;
+            upkeepNeeded =
+                keccak256(abi.encodePacked("")) ==
+                keccak256(abi.encodePacked(id));
         } else {
             upkeepNeeded = block.timestamp - lastRun > 5 minutes;
         }
@@ -85,7 +81,7 @@ contract Keeper is ChainlinkClient, KeeperCompatibleInterface {
             );
         } else {
             lastRun = block.timestamp;
-            requestVolumeData();
+            requestData();
         }
     }
 }
