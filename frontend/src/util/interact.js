@@ -37,6 +37,20 @@ export const connectWallet = async () => {
   }
 };
 
+export const buyPolicy = async () => {
+  const response = await insuranceContract.methods.buyPolicy(
+      "Gold",
+      20,
+      300000,
+      0,
+      20
+  ).send({
+      from:'0x75a562D72c3E31343E9C66B259aE72e346DEBc62',
+      value: web3.utils.toWei('3000000', "Gwei")
+  });
+  return response;
+}
+
 export const getCurrentWalletConnected = async () => {
   if (window.ethereum) {
     try {

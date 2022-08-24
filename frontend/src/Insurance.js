@@ -1,6 +1,7 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import {
+  buyPolicy,
   connectWallet,
   loadContractBalance,
   getCurrentWalletConnected,
@@ -39,6 +40,11 @@ const Insurance = () => {
     setWallet(walletResponse.address);
   };
 
+  const balanceClicked = async () => {
+    const response = await buyPolicy();
+    console.log("response on buy policy: ", response);
+  };
+
   //the UI of our component
   return (
     <div id="container">
@@ -54,7 +60,7 @@ const Insurance = () => {
       </button>
 
       <h2 style={{ paddingTop: "50px" }}>Current Contract Balance:</h2>
-      <p>{balance}</p>
+      <p onClick={balanceClicked}>{balance}</p>
     </div>
   );
 };
