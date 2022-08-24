@@ -1,3 +1,5 @@
+const fs = require('fs');
+
 async function main() {
   const [deployer] = await ethers.getSigners();
   console.log('Deploying contracts with the account: ' + deployer.address);
@@ -7,10 +9,12 @@ async function main() {
   const insurance = await Insurance.deploy();
   console.log("Insurence Contract deployed to address:", insurance.address);
 
-  const Keeper = await ethers.getContractFactory("Keeper");
-  console.log("Deploying Keeper Contract...");
-  const keeper = await Keeper.deploy(insurance.address);
-  console.log("Keeper Contract deployed to address:", keeper.address);
+  const content = '\nINSURANCE_CONTRACT=' + insurance.address;
+
+  fs.appendFileSync('./.env', content, (err) => {
+    if (err) throw err;
+    console.log('Insurance contract adddress updated in .env');
+  })
 }
 
 main()
