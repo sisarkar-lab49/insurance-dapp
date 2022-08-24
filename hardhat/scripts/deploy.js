@@ -1,9 +1,16 @@
 async function main() {
-  const Insurance = await ethers.getContractFactory("Insurance");
+  const [deployer] = await ethers.getSigners();
+  console.log('Deploying contracts with the account: ' + deployer.address);
 
-  // Start deployment, returning a promise that resolves to a contract object
+  const Insurance = await ethers.getContractFactory("Insurance");
+  console.log("Deploying Insurence Contract...");
   const insurance = await Insurance.deploy();
-  console.log("Contract deployed to address:", insurance.address);
+  console.log("Insurence Contract deployed to address:", insurance.address);
+
+  const Keeper = await ethers.getContractFactory("Keeper");
+  console.log("Deploying Keeper Contract...");
+  const keeper = await Keeper.deploy(insurance.address);
+  console.log("Keeper Contract deployed to address:", keeper.address);
 }
 
 main()
