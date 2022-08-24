@@ -20,6 +20,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
         cache-dependency-path: hardhat/package-lock.json
+    - run: cd hardhat
     - run: npn install 
     - run: npm run compile
     - run: npm run deploy
