@@ -20,6 +20,7 @@ jobs:
         envkey_API_URL: ${{ secrets.API_URL }}
         envkey_PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
         directory: hardhat
+    - run: cat hardhat/.env
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
       with:
