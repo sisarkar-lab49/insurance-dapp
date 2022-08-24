@@ -14,10 +14,13 @@ jobs:
         node-version: [18.x]
     steps:
     - uses: actions/checkout@v3
+    - name: Create .env file
+      uses: SpicyPizza/create-envfile@v1
+      with:
+        envkey_API_URL: ${{ secrets.API_URL }}
+        envkey_PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
+        directory: hardhat
     - name: Use Node.js ${{ matrix.node-version }}
-      env:
-        API_URL: ${{ secrets.API_URL }}
-        PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
