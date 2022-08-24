@@ -12,14 +12,15 @@ jobs:
     strategy:
       matrix:
         node-version: [18.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
     steps:
     - uses: actions/checkout@v3
+    - name: Change Dir
+      run: cd hardhat
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: cd hardhat && npn install 
+    - run: npn install 
     - run: npm run compile
     - run: npm run deploy
