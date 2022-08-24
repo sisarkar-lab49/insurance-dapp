@@ -21,6 +21,6 @@ jobs:
         cache: 'npm'
         cache-dependency-path: hardhat/package-lock.json
     - run: cd hardhat
-    - run: npn install 
+    - run: npm install 
     - run: npm run compile
     - run: npm run deploy
