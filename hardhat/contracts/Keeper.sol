@@ -79,6 +79,7 @@ contract Keeper is ChainlinkClient, KeeperCompatibleInterface {
                 0x75a562D72c3E31343E9C66B259aE72e346DEBc62,
                 0
             );
+            id = "";
         } else {
             lastRun = block.timestamp;
             requestData();
