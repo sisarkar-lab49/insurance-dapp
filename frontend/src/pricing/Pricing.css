@@ -1,0 +1,106 @@
+.pricing-header-container{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 4rem;
+}
+
+.pricing-header-container span {
+    font-size: 1.5rem;
+}
+
+.pricing-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.shadow {
+    box-shadow: 0 0 10px 5px #8686bb;
+}
+
+.tile-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    box-sizing: border-box;
+    background-color: white;
+    border-radius: 10px;
+    height: 25rem;
+    gap:0.5rem;
+}
+
+.tile-box:hover {
+    height: 28rem !important;
+    box-shadow: 0 0 10px 5px #8686bb;
+}
+
+.dollar {
+    padding-top: 18px;
+}
+
+.month {
+    padding-top: 34px;
+}
+
+.amount {
+    font-size: 5rem;
+}
+
+.tile-text {
+    font-size:1.5rem;
+}
+
+.compare-list {
+    margin: 0;
+    padding: 0;
+    margin-left: 20px;
+}
+
+.compare-list-container {
+    display:flex;
+    justify-content: space-between;
+}
+
+.compare-list-header-container {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid grey;
+    margin-bottom: 10px;
+}
+
+.compare-features{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.compare-features-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 80vw;
+    font-size: 1.2rem;
+}
+
+.pricing-container ul{
+    list-style-type: none;
+}
+
+.pricing-container ul li::before {
+    content: "\2022";
+    color: blue;
+    font-weight: bold;
+    display: inline-block; 
+    width: 2em;
+    margin-left: -1em;
+  }
+.loading-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}

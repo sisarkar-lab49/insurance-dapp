@@ -1,0 +1,38 @@
+.plan-details-container {
+    padding: 20px;
+}
+
+.plan-header-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.plan-header-content {
+    display: flex;
+    border-bottom: 1px solid grey;
+    width: 60%;
+    justify-content: center;
+    align-items: center;
+}
+
+.plan-content-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.plan-content-image-container{
+    width:50%;
+}
+
+.plan-content-data-container {    
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    flex-direction: column;
+    gap:.5rem;
+}
