@@ -1,7 +1,7 @@
 import Privacypolicy from "./Privacypolicy";
 import './Plandetails.css'
 import { Button } from "@mui/material";
-import PlanImage from '../assets/plandetails.png';
+import PlanImage from '../assets/Green.png';
 import { useNavigate } from "react-router-dom";
 
 const Wellnessplan = () => {
@@ -17,7 +17,7 @@ const Wellnessplan = () => {
             </div>
             <div className="plan-content-container">
                 <div className="plan-content-image-container">
-                    <img style={{width: '100%'}} alt='plan details' src={PlanImage}/>
+                    <img style={{width: '100%',height:'100%'}} alt='plan details' src={PlanImage}/>
                 </div>
                 <div className="plan-content-data-container">
                     <span>With Wellness plans, you typically pay a low premium each month but higher out-of-pocket fees when you need healthcare services. Bronze plans minimize your monthly costs and are best if you don’t have a lot of health needs.</span>

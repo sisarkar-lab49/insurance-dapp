@@ -24,7 +24,12 @@
 }
 
 .plan-content-image-container{
-    width:50%;
+    width: 30%;
+    height: 35rem;
+    padding: 20px;
+    background-color: white;
+    margin: 20px;
+    
 }
 
 .plan-content-data-container {    

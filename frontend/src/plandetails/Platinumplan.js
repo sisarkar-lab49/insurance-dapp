@@ -1,7 +1,7 @@
 import Privacypolicy from "./Privacypolicy";
 import './Plandetails.css'
 import { Button } from "@mui/material";
-import PlanImage from '../assets/plandetails.png';
+import PlanImage from '../assets/Platinum.png';
 import { useNavigate } from "react-router-dom";
 
 const Platinumplan = () => {
@@ -16,7 +16,7 @@ const Platinumplan = () => {
             </div>
             <div className="plan-content-container">
                 <div className="plan-content-image-container">
-                    <img style={{ width: '100%' }} alt='plan details' src={PlanImage} />
+                    <img style={{ width: '100%',height:'100%' }} alt='plan details' src={PlanImage} />
                 </div>
                 <div className="plan-content-data-container">
                     <span>
