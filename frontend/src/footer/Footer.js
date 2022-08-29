@@ -66,6 +66,14 @@ const Footer = () => {
                         Contact
                     </NavLink>
                 </li>
+                <li>
+                    <NavLink to="/howitworks" style={({ isActive }) => ({
+                        color: isActive ? 'blue' : 'black',
+                        textDecoration: 'none'
+                    })}>
+                        How it works
+                    </NavLink>
+                </li>
             </ul>
         </div>
     )

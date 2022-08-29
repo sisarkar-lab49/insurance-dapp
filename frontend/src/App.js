@@ -9,23 +9,46 @@ import Footer from './footer/Footer';
 import Howitworks from './howitworks/HowItworks';
 import Plandetails from './plandetails/Plandetails';
 import PremiumCalculator from './premiumcalculator/PremiumCalculator';
+import LifeSecureIcon from './assets/LifeSecureIcon.png';
+import HomeButton from './assets/HomeButton.jpg';
+import { useState } from 'react';
+import UserProfile from './userprofile/UserProfile';
 
 function App() {
-  return (
-    <div className='app-container'>
+
+  const [atHome, setAthome] = useState(true);
+
+  const MainContent = (
+    <div>
       <Navbar />
+      <div>
       <div className='main-container'>
         <Routes>
-          <Route exact path="/" element={<Homepage/>}/>
-          <Route exact path="/pricing" element={<Pricing/>}/>
-          <Route exact path="/about" element={<About/>}/>
-          <Route exact path="/contact" element={<Contact/>}/>
-          <Route exact path="/howitworks" element={<Howitworks/>}/>
-          <Route path="/plandetails" element={<Plandetails/>}/>
-          <Route path="/premiumcalculator" element={<PremiumCalculator/>}/>
-        </Routes>      
+          <Route exact path="/" element={<Homepage />} />
+          <Route exact path="/pricing" element={<Pricing />} />
+          <Route exact path="/about" element={<About />} />
+          <Route exact path="/contact" element={<Contact />} />
+          <Route exact path="/howitworks" element={<Howitworks />} />
+          <Route path="/plandetails" element={<Plandetails />} />
+          <Route path="/premiumcalculator" element={<PremiumCalculator />} />
+          <Route path="/user" element={<UserProfile />} />
+        </Routes>
+      </div>
+      {<Footer />}
+      </div>
+    </div>
+  )
+
+  return (
+    <div className='app-container'>
+      {atHome ?
+        <div className='home-page-icon-container'>
+          <h1>Life Secure</h1>
+          <img className='home-icon1' src={LifeSecureIcon} />
+          <img className='home-icon2' src={HomeButton} onClick={() => setAthome(false)} />
         </div>
-        <Footer/>
+        : MainContent
+      }
     </div>
   );
 }

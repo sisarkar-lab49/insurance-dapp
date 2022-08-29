@@ -35,9 +35,6 @@
 .browseButton {
     padding: 10px 10px 0 0;
     display: flex;
-    gap: 2rem;
-    justify-content: space-between;
-    width: 50%;
     margin-top: 3%;
 }
 

@@ -59,3 +59,21 @@
     border-radius: 50%;
     width: 100%;
 }
+
+.nav-header-icon-container {
+    display: flex;
+    height: 100%;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+}
+
+.nav-header-icon-container {
+    display: flex;
+    height: 100%;
+}
+.nav-header-icon-container img {
+    display: flex;
+    height: 100%;
+    border-radius: 50%;
+}

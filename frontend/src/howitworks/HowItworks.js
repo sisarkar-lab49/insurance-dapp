@@ -1,7 +1,11 @@
+
+import HowitworksImg from '../assets/howitworks.png'
+import './Howitworks.css'
+
 const Howitworks = () => {
     return (
-        <div>
-            How it works 
+        <div className='how-it-works-container'>
+            <img style={{height:'700px',width:'700px'}}alt='how it works' src={HowitworksImg}/>
         </div>
     )
 }

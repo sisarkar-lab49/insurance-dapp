@@ -24,7 +24,7 @@ const Homepage = () => {
                 <span className='plannerText'>Instant claim settlement</span>
                 <span className='teaminfo'>Hackathon project by Fantastic Four</span>
                 <div className='browseButton'>
-                    <Button style={{whiteSpace: 'nowrap', minWidth:'auto', borderRadius:'10px'}} variant='contained' onClick={onTryNow}>Try now</Button>
+                    <Button style={{whiteSpace: 'nowrap', minWidth:'10rem', borderRadius:'10px'}} variant='contained' onClick={onTryNow}>Try now</Button>
                 </div>
             </div>        
         </div>

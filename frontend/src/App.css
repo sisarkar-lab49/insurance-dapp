@@ -19,3 +19,24 @@ html,body {
   margin-top:80px;
   overflow:auto;
 }
+
+.home-page-icon-container {
+  display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    gap: 5rem;
+    flex-direction: column;
+}
+
+.home-icon1 {
+  border-radius: 50%;
+    width: 25rem;
+    height: 25rem;
+}
+
+.home-icon2 {
+  border-radius: 50%;
+    width: 5rem;
+    height: 5rem;
+}

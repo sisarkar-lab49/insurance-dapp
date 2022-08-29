@@ -1,7 +1,7 @@
 
 
 .footer-content{
-    display: flex;
+    /* display: flex;
     flex-direction: row;
     gap: 3rem;
     width: 60%;
@@ -10,7 +10,22 @@
     margin:auto;
     height: 140px;
     position: relative;
+    margin-top: 10px; */
+
+    display: flex;
+    flex-direction: row;
+    grid-gap: 3rem;
+    gap: 3rem;
+    width: 60%;
+    justify-content: center;
+    border-top: 1px solid grey;
+    /* margin: auto; */
+    /* height: 140px; */
+    position: relative;
     margin-top: 10px;
+    bottom: 0;
+    margin-left: 19%;
+    margin-right: 19%;
 }
 
 

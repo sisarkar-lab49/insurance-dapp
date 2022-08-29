@@ -1,18 +1,21 @@
 import './Navbar.css';
 import { Button } from '@mui/material';
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { connectWallet, getCurrentWalletConnected, getSubscriptionForUser, loadContractBalance } from '../api/Interact';
 import { useEffect, useState } from 'react';
 import metamask from '../assets/Robin.png';
+import LifeSecureIcon from '../assets/LifeSecureIcon.png';
 
 const Navbar = () => {
 
     const [accountAddr, setAccountAddr] = useState();
+    const navigate = useNavigate();
     console.log('address:::',accountAddr);
 
     const getSubscriptionDetails = async () => {
         const response = await getSubscriptionForUser(accountAddr?.address);
         console.log('subscription is ::::',response);
+        navigate('/user',{state:{plans:response, metamaskId:accountAddr?.address}});
     }
 
     const addWalletListener = () => {
@@ -48,11 +51,17 @@ const Navbar = () => {
         connectWalletPressed();
     }
 
+    const NavbarIcon = (
+        <div className='nav-header-icon-container'>
+            <img alt='life secure'src={LifeSecureIcon}/>
+        </div>
+    )
 
     return (
         <div className="navbarContainer">
-            <div>
+            <div className='nav-header-icon-container'>
                 <span className='headerName'>LifeSecure</span>
+                {NavbarIcon}
             </div>
             <div className='navMenuContainer'>
                 <NavLink to="/" style={({ isActive }) => ({
