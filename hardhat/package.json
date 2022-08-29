@@ -6,9 +6,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\"",
     "compile": "npx hardhat compile",
-    "deploy": "npm run deploy-insurance && npm run deploy-keeper",
+    "deploy": "npm run deploy-insurance && npm run deploy-keeper && npm run deploy-registrar",
     "deploy-insurance": "npx hardhat run scripts/insurance.js --network goerli",
     "deploy-keeper": "npx hardhat run scripts/keeper.js --network goerli",
+    "deploy-registrar": "npx hardhat run scripts/registrar.js --network goerli",
     "setup": "npm run test && npm run compile && npm run deploy",
     "ui": "cd frontend/ && npm run start"
   },
