@@ -19,8 +19,10 @@ const style = {
 
 export default function PopupModal(props) {
     const [open, setOpen] = React.useState(props?.open);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
+    const handleClose = () => {
+        setOpen(false);
+        props?.handleOpenResponseModal();
+    }
 
     return (
         <div>         
@@ -32,7 +34,7 @@ export default function PopupModal(props) {
             >
                 <Box sx={style}>
                     <Typography id="modal-modal-title" variant="h6" component="h2">
-                        <span style={{ fontSize: '2rem', fontWeight: 'bold' }}>Thanks</span>
+                        <span style={{ fontSize: '2rem', fontWeight: 'bold' }}>{props?.header}</span>
                     </Typography>
                     <Typography id="modal-modal-description" sx={{ mt: 2 }}>
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>

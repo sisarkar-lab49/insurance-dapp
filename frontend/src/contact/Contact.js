@@ -28,7 +28,7 @@ const Contact = () => {
 
     const ContactForm = (
         <div className='contact-form-container'>
-            {showModal && <PopupModal open={showModal} message={messageInfo}/>}
+            {showModal && <PopupModal header='Thanks' open={showModal} message={messageInfo}/>}
             <h1>Contact Us</h1>
             <div className='contact-text-container'>
                 <span>Explore the future with us</span>

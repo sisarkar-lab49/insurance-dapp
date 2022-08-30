@@ -16,21 +16,27 @@ const PremiumCalculator = () => {
     const [sumInsured, setSumInsured] = useState();
     const [age, setAge] = useState(18);
     const [walletAddress, setWallet] = useState("");
-    const [premiumAmount,setPremiumAmount]= useState(0);
-    const [premiumAmountWei,setPremiumAmountWei]= useState(0);
+    const [premiumAmount, setPremiumAmount] = useState(0);
+    const [premiumAmountWei, setPremiumAmountWei] = useState(0);
     const [balance, setBalance] = useState("No connection to the network.");
-    const [buyResponseStatus,setBuyResponseStatus] = useState();
-    const [buying,setBuying]=useState(false);
-    const [openResponseModal,setOpenResponseModal] = useState(false);
-    const sucessMessage= 'Congratulations!!! payment succesful. You are now secured with LifeSecure';
+    const [buyResponseStatus, setBuyResponseStatus] = useState();
+    const [buying, setBuying] = useState(false);
+    const [openResponseModal, setOpenResponseModal] = useState(false);
+    const sucessMessage = 'Congratulations!!! payment succesful. You are now secured with LifeSecure';
+    const [errorMessage, setErrorMessage] = useState('');
+    const [isError, setIsError] = useState(false);
 
-    useEffect(()=>{
-        if(buyResponseStatus){
+    const handleOpenResponseModal = () => {
+        setOpenResponseModal(false);
+    }
+
+    useEffect(() => {
+        if (buyResponseStatus) {
             setOpenResponseModal(true);
         }
 
-    },[buyResponseStatus])
-   
+    }, [buyResponseStatus])
+
     const addWalletListener = () => {
         if (window.ethereum) {
             window.ethereum.on("accountsChanged", (accounts) => {
@@ -50,7 +56,7 @@ const PremiumCalculator = () => {
         setWallet(address);
         addWalletListener();
 
-    }  
+    }
 
     useEffect(() => {
         onLoadFunction();
@@ -58,47 +64,82 @@ const PremiumCalculator = () => {
 
     const connectWalletPressed = async () => {
         const walletResponse = await connectWallet();
-        setWallet(walletResponse.address);
+        setWallet(walletResponse?.address);
+        return walletResponse?.address;
     };
 
     const calculateGweiForDollar = async (amount) => {
         const response = await getGweiForDollar(amount);
+        console.log('amount is ::', response);
         return response;
     }
 
     const calculatePremiumForPlan = async () => {
-
-        const premiumcalculatorInput = {
-            policyName:plan.charAt(0).toUpperCase() + plan.substring(1),
-            tenure:tenure,
-            sumInsured:parseInt(sumInsured,10),
-            premiumFrequency:premiumFrequency,
-            age:age
-        }      
-        const response = await calculatePremium(premiumcalculatorInput);
-        const amount = await calculateGweiForDollar(response);
-        setPremiumAmountWei(amount);
-        setPremiumAmount(response);      
+        try {
+            const premiumcalculatorInput = {
+                policyName: plan.charAt(0).toUpperCase() + plan.substring(1),
+                tenure: tenure,
+                sumInsured: parseInt(sumInsured, 10),
+                premiumFrequency: premiumFrequency,
+                age: age
+            }
+            const response = await calculatePremium(premiumcalculatorInput);
+            const amount = await calculateGweiForDollar(response);
+            setPremiumAmountWei(amount);
+            setPremiumAmount(response);
+            setIsError(false);
+        }
+        catch (error) {
+            setIsError(true);
+            setErrorMessage('Failed to calculate Premium..');
+            setOpenResponseModal(true);
+        }
     }
 
     const purchasePolicyForPlan = async () => {
         setBuying(true);
-        const connectResponse = await connectWalletPressed();
-        console.log('connect response ::',connectResponse);
+        try {
+            const address = await connectWalletPressed();
+            console.log('connect response ::', address);
 
-        const policyRequest = {
-            policyName:plan.charAt(0).toUpperCase() + plan.substring(1),
-            tenure:tenure,
-            sumInsured:parseInt(sumInsured,10),
-            premiumFrequency:premiumFrequency,
-            age:age,
-            amountWei: premiumAmountWei
+            const premiumcalculatorInput = {
+                policyName: plan.charAt(0).toUpperCase() + plan.substring(1),
+                tenure: tenure,
+                sumInsured: parseInt(sumInsured, 10),
+                premiumFrequency: premiumFrequency,
+                age: age
+            }
+            const premiumResponse = await calculatePremium(premiumcalculatorInput);
+            const amount = await calculateGweiForDollar(premiumResponse);
+            setPremiumAmountWei(amount);
+            setPremiumAmount(premiumResponse);
+
+            const policyRequest = {
+                policyName: plan.charAt(0).toUpperCase() + plan.substring(1),
+                tenure: tenure,
+                sumInsured: parseInt(sumInsured, 10),
+                premiumFrequency: premiumFrequency,
+                age: age,
+                amountWei: parseInt(premiumAmountWei, 10),
+                address: address
+            }
+            console.log('request for purchase premium is :::', policyRequest)
+
+            const response = await buyPolicy(policyRequest);
+            setBuying(false);
+            setBuyResponseStatus(response?.status);
+            setIsError(false);
+            console.log('buy response is ::::', response);
         }
-        console.log('request for purchase premium is :::',policyRequest)
-        const response = await buyPolicy(policyRequest);
-        setBuying(false);
-        setBuyResponseStatus(response?.status);
-        console.log('buy response is ::::',response);
+        catch (error) {
+            setBuying(false);
+            if (error?.code === 4001) {
+                setErrorMessage(error?.message);
+                setOpenResponseModal(true);
+                setIsError(true);
+                console.log('error::', error);
+            }
+        }
     }
     const onAgeChange = (event) => {
         setAge(event?.target?.value);
@@ -115,10 +156,22 @@ const PremiumCalculator = () => {
     const onSumInsuredChange = (event) => {
         setSumInsured(event?.target?.value);
     }
-    console.log('sum is ',sumInsured);
+
+
+    const getPopup = () => {
+
+        if (isError) {
+            return <PopupModal handleOpenResponseModal={handleOpenResponseModal} header='Error' open={openResponseModal} message={errorMessage} />
+        }
+
+        else {
+            return <PopupModal handleOpenResponseModal={handleOpenResponseModal} header='Thanks' open={openResponseModal} message={sucessMessage} />
+        }
+    }
+
     return (
         <div className='premium-calculator-container'>
-            {openResponseModal && <PopupModal open={openResponseModal} message={sucessMessage}/>}
+            {openResponseModal && getPopup()}
             <div className='premium-calculator-content'>
                 <div className='calculator-row'>
                     <span className='calculator-row-item'>Plan</span>
@@ -128,7 +181,7 @@ const PremiumCalculator = () => {
                 <div className='calculator-row'>
                     <span className='calculator-row-item'>Tenure</span>
                     <Select
-                        style={{backgroundColor:'white'}}
+                        style={{ backgroundColor: 'white' }}
                         id="Tenure"
                         value={tenure}
                         label="Tenure"
@@ -144,13 +197,13 @@ const PremiumCalculator = () => {
 
                 <div className='calculator-row'>
                     <span className='calculator-row-item'>Sum insured</span>
-                    <TextField style={{backgroundColor:'white'}} className='calculator-row-item' value={sumInsured} onChange={onSumInsuredChange} />
+                    <TextField style={{ backgroundColor: 'white' }} className='calculator-row-item' value={sumInsured} onChange={onSumInsuredChange} />
                 </div>
 
                 <div className='calculator-row'>
                     <span className='calculator-row-item'>Premium Frequency</span>
                     <Select
-                        style={{backgroundColor:'white'}}
+                        style={{ backgroundColor: 'white' }}
                         id="premium-frequency"
                         value={premiumFrequency}
                         label="Premium Frequency"
@@ -163,25 +216,25 @@ const PremiumCalculator = () => {
                         <MenuItem value={6}>Half yearly</MenuItem>
                         <MenuItem value={12}>Yearly</MenuItem>
                     </Select>
-                </div>              
+                </div>
 
                 <div className='calculator-row'>
                     <span className='calculator-row-item'>Insured person age</span>
-                    <TextField style={{backgroundColor:'white'}} className='calculator-row-item' value={age} onChange={onAgeChange} />
+                    <TextField style={{ backgroundColor: 'white' }} className='calculator-row-item' value={age} onChange={onAgeChange} />
                 </div>
                 <div className='calculator-row'>
                     <span className='calculator-row-item'>Premium Amount</span>
                     <span className='calculator-row-item'>{premiumAmount}</span>
-                    
+
                 </div>
                 <div className='button-container'>
-                <Button variant='contained'
-                     style={{ fontSize: '1.2rem', borderRadius: '10px', padding: '10px', minHeight:'4rem',minWidth: '12rem', marginTop: '2rem' }}
-                    onClick={calculatePremiumForPlan}>Calculate Premium</Button>
+                    <Button variant='contained'
+                        style={{ fontSize: '1.2rem', borderRadius: '10px', padding: '10px', minHeight: '4rem', minWidth: '12rem', marginTop: '2rem' }}
+                        onClick={calculatePremiumForPlan}>Calculate Premium</Button>
 
-                <Button variant='contained' 
-                  style={{ backgroundColor:buying?'white':'',fontSize: '1.2rem', borderRadius: '10px', padding: '2px',minHeight:'4rem', minWidth: '12rem', marginTop: '2rem' }}
-                  onClick={purchasePolicyForPlan}>{buying?<CircularProgress/>:'Purchase'}</Button>
+                    <Button variant='contained'
+                        style={{ backgroundColor: buying ? 'white' : '', fontSize: '1.2rem', borderRadius: '10px', padding: '2px', minHeight: '4rem', minWidth: '12rem', marginTop: '2rem' }}
+                        onClick={purchasePolicyForPlan}>{buying ? <CircularProgress /> : 'Purchase'}</Button>
                 </div>
             </div>
 

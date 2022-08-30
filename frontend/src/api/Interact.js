@@ -41,7 +41,7 @@ export const getGweiForDollar = async (amount) => {
 
 export const buyPolicy = async (inputRequest) => {
     const amount = inputRequest?.amountWei; 
-  const amountToSend = web3.utils.toWei(amount, "Gwei")
+  const amountToSend = web3.utils.toWei(amount.toString(), "Gwei")
   console.log('amount:::',amountToSend);
     const response = await insuranceContract.methods.buyPolicy(
         inputRequest.policyName,
@@ -50,7 +50,7 @@ export const buyPolicy = async (inputRequest) => {
         inputRequest.premiumFrequency,
         inputRequest.age
     ).send({
-        from:'0xB9F17c46eCC29FA41326938e4A8665f181f70bE9',
+        from:inputRequest?.address,
         value: amountToSend
     });
     return response;
