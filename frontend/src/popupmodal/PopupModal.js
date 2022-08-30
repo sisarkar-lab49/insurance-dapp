@@ -23,8 +23,7 @@ export default function PopupModal(props) {
     const handleClose = () => setOpen(false);
 
     return (
-        <div>
-            <Button onClick={handleOpen}>Open modal</Button>
+        <div>         
             <Modal
                 open={open}
                 onClose={handleClose}

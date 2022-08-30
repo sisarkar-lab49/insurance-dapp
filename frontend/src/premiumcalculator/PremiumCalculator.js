@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { buyPolicy, calculatePremium, connectWallet, getCurrentWalletConnected, getGweiForDollar, loadContractBalance } from '../api/Interact';
 import './PremiumCalculator.css';
+import CircularProgress from '@mui/material/CircularProgress';
+import PopupModal from '../popupmodal/PopupModal';
 
 const PremiumCalculator = () => {
 
@@ -17,8 +19,17 @@ const PremiumCalculator = () => {
     const [premiumAmount,setPremiumAmount]= useState(0);
     const [premiumAmountWei,setPremiumAmountWei]= useState(0);
     const [balance, setBalance] = useState("No connection to the network.");
+    const [buyResponseStatus,setBuyResponseStatus] = useState();
+    const [buying,setBuying]=useState(false);
+    const [openResponseModal,setOpenResponseModal] = useState(false);
+    const sucessMessage= 'Congratulations!!! payment succesful. You are now secured with LifeSecure';
 
-    console.log('data:::', age, tenure, premiumFrequency, sumInsured);
+    useEffect(()=>{
+        if(buyResponseStatus){
+            setOpenResponseModal(true);
+        }
+
+    },[buyResponseStatus])
    
     const addWalletListener = () => {
         if (window.ethereum) {
@@ -35,18 +46,14 @@ const PremiumCalculator = () => {
     const onLoadFunction = async () => {
         const balance = await loadContractBalance();
         setBalance(balance);
-
         const { address } = await getCurrentWalletConnected();
-
         setWallet(address);
-
         addWalletListener();
 
-    }
-    console.log('balance is ::',balance);
+    }  
 
     useEffect(() => {
-        onLoadFunction()
+        onLoadFunction();
     }, [])
 
     const connectWalletPressed = async () => {
@@ -67,17 +74,15 @@ const PremiumCalculator = () => {
             sumInsured:parseInt(sumInsured,10),
             premiumFrequency:premiumFrequency,
             age:age
-        }
-        console.log('request for calculate premium is :::',premiumcalculatorInput)
+        }      
         const response = await calculatePremium(premiumcalculatorInput);
         const amount = await calculateGweiForDollar(response);
         setPremiumAmountWei(amount);
-        setPremiumAmount(response);
-        console.log('response is ::::',amount);
+        setPremiumAmount(response);      
     }
 
     const purchasePolicyForPlan = async () => {
-
+        setBuying(true);
         const connectResponse = await connectWalletPressed();
         console.log('connect response ::',connectResponse);
 
@@ -91,7 +96,9 @@ const PremiumCalculator = () => {
         }
         console.log('request for purchase premium is :::',policyRequest)
         const response = await buyPolicy(policyRequest);
-        console.log('response is ::::',response);
+        setBuying(false);
+        setBuyResponseStatus(response?.status);
+        console.log('buy response is ::::',response);
     }
     const onAgeChange = (event) => {
         setAge(event?.target?.value);
@@ -108,8 +115,10 @@ const PremiumCalculator = () => {
     const onSumInsuredChange = (event) => {
         setSumInsured(event?.target?.value);
     }
+    console.log('sum is ',sumInsured);
     return (
         <div className='premium-calculator-container'>
+            {openResponseModal && <PopupModal open={openResponseModal} message={sucessMessage}/>}
             <div className='premium-calculator-content'>
                 <div className='calculator-row'>
                     <span className='calculator-row-item'>Plan</span>
@@ -132,7 +141,6 @@ const PremiumCalculator = () => {
                         <MenuItem value={30}>Thirty years</MenuItem>
                     </Select>
                 </div>
-
 
                 <div className='calculator-row'>
                     <span className='calculator-row-item'>Sum insured</span>
@@ -172,8 +180,8 @@ const PremiumCalculator = () => {
                     onClick={calculatePremiumForPlan}>Calculate Premium</Button>
 
                 <Button variant='contained' 
-                  style={{ fontSize: '1.2rem', borderRadius: '10px', padding: '2px',minHeight:'4rem', minWidth: '12rem', marginTop: '2rem' }}
-                  onClick={purchasePolicyForPlan}>Purchase</Button>
+                  style={{ backgroundColor:buying?'white':'',fontSize: '1.2rem', borderRadius: '10px', padding: '2px',minHeight:'4rem', minWidth: '12rem', marginTop: '2rem' }}
+                  onClick={purchasePolicyForPlan}>{buying?<CircularProgress/>:'Purchase'}</Button>
                 </div>
             </div>
 

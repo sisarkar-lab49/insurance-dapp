@@ -15,41 +15,47 @@ const UserProfile = () => {
     )
 
     const userInfo = (
-        <div className="user-info-container">
-            <div className='calculator-row'>
-                <span className='calculator-row-item'>Name</span>
-                <span className='calculator-row-item'>John</span>
-            </div>
+        <div className="user-container">
+            <h2>User Details</h2>
+            <div className="user-info-container">
+                <div className='calculator-row'>
+                    <span className='calculator-row-item'>Name</span>
+                    <span className='calculator-row-item'>John</span>
+                </div>
 
-            <div className='calculator-row'>
-                <span className='calculator-row-item'>Last Name</span>
-                <span className='calculator-row-item'>Snow</span>
-            </div>
+                <div className='calculator-row'>
+                    <span className='calculator-row-item'>Last Name</span>
+                    <span className='calculator-row-item'>Snow</span>
+                </div>
 
-            <div className='calculator-row'>
-                <span className='calculator-row-item'>User Name</span>
-                <span className='calculator-row-item'>John_snow</span>
-            </div>
-            <div className='calculator-row'>
-                <span className='calculator-row-item'>Email</span>
-                <span className='calculator-row-item'>John.snow@gmail.com</span>
-            </div>
+                <div className='calculator-row'>
+                    <span className='calculator-row-item'>User Name</span>
+                    <span className='calculator-row-item'>John_snow</span>
+                </div>
+                <div className='calculator-row'>
+                    <span className='calculator-row-item'>Email</span>
+                    <span className='calculator-row-item'>John.snow@gmail.com</span>
+                </div>
 
-            <div className='calculator-row'>
-                <span className='calculator-row-item'>DOB</span>
-                <span className='calculator-row-item'>07/07/1985</span>
-            </div>
+                <div className='calculator-row'>
+                    <span className='calculator-row-item'>DOB</span>
+                    <span className='calculator-row-item'>07/07/1985</span>
+                </div>
 
-            <div className='calculator-row'>
-                <span className='calculator-row-item'>Metamask Id</span>
-                <span className='calculator-row-item'>{state?.metamaskId}</span>
+                <div className='calculator-row'>
+                    <span className='calculator-row-item'>Metamask Id</span>
+                    <span className='calculator-row-item'>{state?.metamaskId}</span>
+                </div>
+                <Button variant="contained" style={{ width: '200px' }}>Update details</Button>
             </div>
-            <Button variant="contained" style={{ width: '200px' }}>Update details</Button>
         </div>
     )
 
     const policyInfo = (
+        <div className="policy-container">
+        <h2>Plan Details</h2>
         <div className="user-plan-container">
+          
             {state?.plans?.map((plan, index) => {
                 return (
                     <div key={index} className="plan-content">
@@ -62,6 +68,7 @@ const UserProfile = () => {
                 )
             })}
 
+        </div>
         </div>
     )
 
