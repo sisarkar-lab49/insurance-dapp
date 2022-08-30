@@ -10,7 +10,7 @@ import Howitworks from './howitworks/HowItworks';
 import Plandetails from './plandetails/Plandetails';
 import PremiumCalculator from './premiumcalculator/PremiumCalculator';
 import LifeSecureIcon from './assets/LifeSecureIcon.png';
-import HomeButton from './assets/HomeButton.jpg';
+import HomeButton from './assets/HomeButton.png';
 import { useState } from 'react';
 import UserProfile from './userprofile/UserProfile';
 
@@ -43,7 +43,6 @@ function App() {
     <div className='app-container'>
       {atHome ?
         <div className='home-page-icon-container'>
-          <h1>Life Secure</h1>
           <img className='home-icon1' src={LifeSecureIcon} />
           <img className='home-icon2' src={HomeButton} onClick={() => setAthome(false)} />
         </div>

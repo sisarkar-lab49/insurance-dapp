@@ -25,16 +25,15 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    font-size: 1.2rem;
     box-sizing: border-box;
     background-color: white;
     border-radius: 10px;
-    height: 25rem;
+    height: 24rem;
     gap:0.5rem;
 }
 
 .tile-box:hover {
-    height: 28rem !important;
+    height: 25rem !important;
     box-shadow: 0 0 10px 5px #8686bb;
 }
 
@@ -51,15 +50,27 @@
 }
 
 .tile-text {
-    font-size:1.2rem;
+    font-size: 1rem;
+    font-weight: 400;
 }
-
+.tile-button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.tile-text-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 .compare-list {
     margin: 0;
     padding: 0;
     margin-left: 20px;
 }
-
+ul.compare-list li {
+    white-space: nowrap !important;
+}
 .compare-list-container {
     display:flex;
     justify-content: space-between;

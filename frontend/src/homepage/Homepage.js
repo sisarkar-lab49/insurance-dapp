@@ -22,7 +22,7 @@ const Homepage = () => {
                 <span className='plannerText'>Insurance without middleman</span>
                 <span className='plannerText'>or complicated terms</span>
                 <span className='plannerText'>Instant claim settlement</span>
-                <span className='teaminfo'>Hackathon project by Fantastic Four</span>
+                <span className='teaminfo'>Hackathon project by Fantastic Five</span>
                 <div className='browseButton'>
                     <Button style={{whiteSpace: 'nowrap', minWidth:'10rem', borderRadius:'10px'}} variant='contained' onClick={onTryNow}>Try now</Button>
                 </div>

@@ -74,8 +74,12 @@ const Pricing = () => {
                             <span className='amount'>{policy?.basePremium}</span>
                             <span className='month'>/month</span>
                         </div>
+                        <div className='tile-text-container'>
                         <span className='tile-text'>{policy?.description}</span>
+                        </div>
+                        <div className='tile-button-container'>
                         <Button variant='contained' onClick={() => navigate(`/plandetails/?plan=${policy?.name}`)}>Get Started with {policy?.name}</Button>
+                        </div>
                     </div>
                 </Grid>
             )
