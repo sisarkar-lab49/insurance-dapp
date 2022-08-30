@@ -19,7 +19,8 @@ REACT_APP_ALCHEMY_KEY = <alchemy websocket url>
 
 ##### **COMMANDS**
 ```
-compile smart contract: npm run compile
-deploy smart contract:  npm run deploy
-run react ui:           npm run ui
+compile smart contract: pushd hardhat && npm run compile && popd
+deploy smart contract:  pushd hardhat && npm run deploy && popd
+build ui:               pushd frontend && npm run build && popd
+start ui:               pushd frontend && npm start && popd
 ```

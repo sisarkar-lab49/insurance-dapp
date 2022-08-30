@@ -35,7 +35,7 @@ contract ModelState is Model, Payable {
         // silver
         features[0] = "Get assured returns";
         features[1] = "4% return on maturity";
-        features[2] = "2x payment in accedental death";
+        features[2] = "2x payment in accidental death";
         features[3] = "Easy premiunm payment";
         features[4] = "Flexible plan tenure";
         features[5] = "Nominee registration options";
