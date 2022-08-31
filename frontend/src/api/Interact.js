@@ -1,7 +1,7 @@
 
 const REACT_APP_ALCHEMY_KEY='wss://eth-goerli.g.alchemy.com/v2/HLPGu3vt9K-3TkEI2rOVblnsm5zY-9_4'
 
-const REACT_APP_CONTRACT_ADDRESS='0x16453f4F466f4B34321935d1ABc736903D0D2014'
+const REACT_APP_CONTRACT_ADDRESS='0x4e2985f9dd408217749A35Bf17860650C7864465'
 
 const { createAlchemyWeb3 } = require("@alch/alchemy-web3");
 const web3 = createAlchemyWeb3(REACT_APP_ALCHEMY_KEY);
