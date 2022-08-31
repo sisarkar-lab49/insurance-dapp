@@ -23,6 +23,11 @@ export const getAllPolicies = async () => {
     return policies;
 };
 
+export const loadContractBalanceInUSD = async () => {
+  const balance = await insuranceContract.methods.getBalanceInUSD().call();
+  return balance;
+};
+
 export const calculatePremium = async (premiumcalculatorInput) => {
     const response = await insuranceContract.methods.calculatePremium(
         premiumcalculatorInput.policyName,

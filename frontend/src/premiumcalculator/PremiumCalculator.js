@@ -1,7 +1,7 @@
 import { Button, MenuItem, Select, TextField } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { buyPolicy, calculatePremium, connectWallet, getCurrentWalletConnected, getGweiForDollar, loadContractBalance } from '../api/Interact';
+import { buyPolicy, calculatePremium, connectWallet, getCurrentWalletConnected, getGweiForDollar, loadContractBalanceInUSD } from '../api/Interact';
 import './PremiumCalculator.css';
 import CircularProgress from '@mui/material/CircularProgress';
 import PopupModal from '../popupmodal/PopupModal';
@@ -50,12 +50,12 @@ const PremiumCalculator = () => {
     }
 
     const onLoadFunction = async () => {
-        const balance = await loadContractBalance();
+        const balance = await loadContractBalanceInUSD();
+        console.log('contract balance in USD ', balance);
         setBalance(balance);
         const { address } = await getCurrentWalletConnected();
         setWallet(address);
         addWalletListener();
-
     }
 
     useEffect(() => {
