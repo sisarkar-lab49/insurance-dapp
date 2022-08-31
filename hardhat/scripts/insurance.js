@@ -4,8 +4,11 @@ async function main() {
   const [deployer] = await ethers.getSigners();
   console.log('deploying contracts with the account: ' + deployer.address);
 
+  const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
+  await delay(5000);
+
   const Insurance = await ethers.getContractFactory("Insurance");
-  console.log("deploying insurence contract...");
+  console.log("deploying insurance contract...");
   const insurance = await Insurance.deploy();
   console.log("insurence contract deployed to address:", insurance.address);
 
