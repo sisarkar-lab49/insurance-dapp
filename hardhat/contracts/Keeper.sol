@@ -61,10 +61,10 @@ contract Keeper is ChainlinkClient, KeeperCompatibleInterface {
 
         if (decodedValue == 0) {
             upkeepNeeded =
-                keccak256(abi.encodePacked("")) ==
+                keccak256(abi.encodePacked("")) !=
                 keccak256(abi.encodePacked(id));
         } else {
-            upkeepNeeded = block.timestamp - lastRun > 5 minutes;
+            upkeepNeeded = block.timestamp - lastRun > 3 minutes;
         }
 
         performData = checkData;
