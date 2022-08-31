@@ -1,0 +1,87 @@
+.calculator-row {
+    display: flex;
+    width:100%;
+    gap: 1rem;
+    font-size: 1rem;
+    align-items: center;
+}
+
+.calculator-row-item {
+    text-transform:capitalize;
+    width: 100%;
+    overflow-wrap: anywhere;
+}
+
+.userprofile-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.user-data-container {
+    display:flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-around;    
+}
+
+.user-info-container {
+    display: flex;
+    flex-direction: column;
+    gap:2rem;
+    width: 100%;
+    border: 1px solid black;
+    border-radius: 20px;
+    padding: 50px;
+    height:25rem;
+    background-color: white;
+    box-shadow: 0 0 10px 5px #8686bb;
+    
+}
+
+.welcome-user-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 30px;
+    color:#00007b;
+    
+}
+.welcome-user-content {
+    width:200px;
+    border: 1px solid black;
+    border-radius: 20px;
+    padding: 50px;
+    background-color: white;
+    box-shadow: 0 0 10px 5px #8686bb;
+
+}
+
+.plan-content {
+    display: flex;
+}
+
+.user-container{
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+}
+
+.policy-container {
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+}
+.user-plan-container {
+    display: flex;
+    flex-direction: column;
+    gap:2rem;
+    width: 100%;
+    border: 1px solid black;
+    border-radius: 20px;
+    overflow-y: scroll;
+    height: 25rem;
+    padding: 50px;
+    background-color: white;
+    box-shadow: 0 0 10px 5px #8686bb;
+}

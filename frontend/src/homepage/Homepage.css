@@ -1,0 +1,68 @@
+.homepageContainer {
+    display: flex;
+    width: 100%;
+    height:100%;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10vh;
+}
+
+.bannerContainer{
+    display: flex;
+    width: 50%;
+    height: 100%;    
+    margin: 0 10% 0 2%;
+}
+
+.bannerImage {
+    width: 100%;
+    height: 100%;
+}
+
+.plannerContainer{
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    height: 100%;
+    padding-left: 10%; 
+}
+.plannerText {   
+    font-size: 2.5rem;
+    font-weight: bold;
+    width:100%;
+}
+
+.browseButton {
+    padding: 10px 10px 0 0;
+    display: flex;
+    margin-top: 3%;
+}
+
+.teaminfo {
+    display: flex;
+    font-size: 1.5rem;
+    width: 50%;
+    padding-top: 1.5rem;
+    font-weight: bold;
+    color: grey;
+}
+
+.homePage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.trustTextContainer {
+    font-weight: bold;
+    color: grey;
+    margin-top:1.5rem;
+}
+
+.planner-content {
+    display:flex;
+    flex-direction:column;
+    width:100%;
+    gap:2rem;
+}

@@ -1,0 +1,37 @@
+{
+  "name": "insurance-dapp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\"",
+    "compile": "npx hardhat compile",
+    "deploy": "npm run deploy-insurance && npm run deploy-keeper && npm run deploy-registrar",
+    "deploy-insurance": "npx hardhat run scripts/insurance.js --network goerli",
+    "deploy-keeper": "npx hardhat run scripts/keeper.js --network goerli",
+    "deploy-registrar": "npx hardhat run scripts/registrar.js --network goerli",
+    "setup": "npm run test && npm run compile && npm run deploy",
+    "ui": "cd frontend/ && npm run start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sisarkar-lab49/insurance-dapp.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sisarkar-lab49/insurance-dapp/issues"
+  },
+  "homepage": "https://github.com/sisarkar-lab49/insurance-dapp#readme",
+  "devDependencies": {
+    "@nomiclabs/hardhat-ethers": "^2.1.0",
+    "ethers": "^5.6.9",
+    "hardhat": "^2.10.1"
+  },
+  "dependencies": {
+    "@chainlink/contracts": "^0.4.2",
+    "dotenv": "^16.0.1",
+    "fs": "^0.0.1-security"
+  }
+}
