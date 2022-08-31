@@ -175,4 +175,9 @@ contract Insurance is ModelState, PriceConsumer {
             .CLAIMED;
         return true;
     }
+
+    function getBalanceInUSD() public view returns (uint) {
+        return
+            ((address(this).balance * uint(getLatestPrice())) / 10**15) / 10**8;
+    }
 }

@@ -7,6 +7,9 @@ async function main() {
   const [deployer] = await ethers.getSigners();
   console.log('deploying contracts with the account: ', deployer.address);
 
+  const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
+  await delay(5000);
+
   const Registrar = await ethers.getContractFactory("Registrar");
   console.log("deploying registrar contract for keeper contract: ", KEEPER_CONTRACT);
   const registrar = await Registrar.deploy(KEEPER_CONTRACT);
