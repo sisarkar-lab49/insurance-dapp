@@ -89,6 +89,7 @@ const PremiumCalculator = () => {
             setPremiumAmountWei(amount);
             setPremiumAmount(response);
             setIsError(false);
+            console.log('contract balance in USD ', balance);
         }
         catch (error) {
             console.log(error)
@@ -132,6 +133,7 @@ const PremiumCalculator = () => {
             setBuyResponseStatus(response?.status);
             setIsError(false);
             console.log('buy response is ::::', response);
+            console.log('contract balance in USD ', balance);
         }
         catch (error) {
             setBuying(false);
