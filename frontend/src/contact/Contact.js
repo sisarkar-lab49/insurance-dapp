@@ -19,6 +19,10 @@ const Contact = () => {
         setShowModal(!showModal)
     }
 
+    const handleOpenResponseModal = () => {
+        setShowModal(false);
+    }
+
 
     const ContactImage = (
         <div className='contact-image-container'>
@@ -28,7 +32,7 @@ const Contact = () => {
 
     const ContactForm = (
         <div className='contact-form-container'>
-            {showModal && <PopupModal header='Thanks' open={showModal} message={messageInfo}/>}
+            {showModal && <PopupModal header='Thanks' open={showModal} message={messageInfo} handleOpenResponseModal={handleOpenResponseModal}/>}
             <h1>Contact Us</h1>
             <div className='contact-text-container'>
                 <span>Explore the future with us</span>

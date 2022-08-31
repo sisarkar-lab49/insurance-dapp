@@ -12,7 +12,7 @@ const PremiumCalculator = () => {
     const queryParams = new URLSearchParams(location?.search)
     const plan = queryParams.get("plan");
     const [tenure, setTenure] = useState(10);
-    const [premiumFrequency, setPremiumFrequency] = useState(1);
+    const [premiumFrequency, setPremiumFrequency] = useState(0);
     const [sumInsured, setSumInsured] = useState();
     const [age, setAge] = useState(18);
     const [walletAddress, setWallet] = useState("");
@@ -83,6 +83,7 @@ const PremiumCalculator = () => {
                 premiumFrequency: premiumFrequency,
                 age: age
             }
+            console.log('premium request ::',premiumcalculatorInput)
             const response = await calculatePremium(premiumcalculatorInput);
             const amount = await calculateGweiForDollar(response);
             setPremiumAmountWei(amount);
@@ -90,6 +91,7 @@ const PremiumCalculator = () => {
             setIsError(false);
         }
         catch (error) {
+            console.log(error)
             setIsError(true);
             setErrorMessage('Failed to calculate Premium..');
             setOpenResponseModal(true);
@@ -208,13 +210,12 @@ const PremiumCalculator = () => {
                         value={premiumFrequency}
                         label="Premium Frequency"
                         className='calculator-row-item'
-                        defaultValue={1}
+                        defaultValue={0}
                         onChange={handlePremiumFrequencyChange}
                     >
-                        <MenuItem value={1}>Monthly</MenuItem>
-                        <MenuItem value={3}>Quarterly</MenuItem>
-                        <MenuItem value={6}>Half yearly</MenuItem>
-                        <MenuItem value={12}>Yearly</MenuItem>
+                        <MenuItem value={2}>Quarterly</MenuItem>
+                        <MenuItem value={1}>Half yearly</MenuItem>
+                        <MenuItem value={0}>Yearly</MenuItem>
                     </Select>
                 </div>
 
