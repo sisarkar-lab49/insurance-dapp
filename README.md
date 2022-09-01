@@ -1,14 +1,14 @@
 # Project with Hardhat, React, Alchemy and Metamask
 
-## Deploys a hello world contract to Goerli testnet. 
+## Deploys a ****insureance, keeper, registrar*** contract on Goerli testnet. 
 ## React frontend connects with metamask wallet and interacts with smart contract usin ABI.
 
 ##### **SETUP**
 
 * Run below commands:
 ```
-npm install
-cd frontend && npm install
+pushd hardhat && npm install && popd
+pushd frontend && npm install && popd
 ```
 * create a .env file in ***insurance-dapp***
 ```
